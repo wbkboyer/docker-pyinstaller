@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:19.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -15,9 +15,11 @@ ENV PYPI_URL=https://pypi.python.org/
 # PYPI index location
 ENV PYPI_INDEX_URL=https://pypi.python.org/simple
 
-
 # install pyinstaller
-RUN pip install pyinstaller==$PYINSTALLER_VERSION
+RUN if [ -z $PYINSTALLER_VERSION ];\
+        then pip install pyinstaller;\
+        else pip install pyinstaller==$PYINSTALLER_VERSION;\
+    fi
 
 RUN mkdir /src/
 VOLUME /src/
